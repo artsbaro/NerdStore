@@ -1,19 +1,26 @@
-﻿using System;
+﻿using NerdStore.Core.Validations;
+using System;
 using System.Collections.Generic;
 
 namespace NerdStore.Domain.Entities
 {
     public class Categoria : EntityBase
     {
-        public Categoria(Guid id, string nome, string codigo)
+        public string Nome { get; private set; }
+        public int Codigo { get; private set; }
+        public Categoria(Guid id, string nome, int codigo)
         {
             Id = id;
             Nome = nome;
             Codigo = codigo;
+            Validar();
         }
 
-        public string Nome { get; private set; }
-        public string Codigo{ get; private set; }
+        private void Validar()
+        {
+            Validacoes.ValidarSeVazio(Nome, "Nome não preenchido");
+            Validacoes.ValidarSeIgual(Codigo, 0, "Codigo não pode ser igual a zero");
+        }
 
         public ICollection<Produto> Produtos { get; private set; }
 

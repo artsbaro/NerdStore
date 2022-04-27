@@ -6,7 +6,10 @@
 
   <ItemGroup>
     <Folder Include="Enums\" />
-    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NerdStore.Core\NerdStore.Core.csproj" />
   </ItemGroup>
 
 </Project>
