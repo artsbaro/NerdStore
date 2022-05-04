@@ -4,5 +4,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NerdStore.Domain\NerdStore.Domain.csproj" />
+    <ProjectReference Include="..\NerdStore.Infra.Data\NerdStore.Infra.csproj" />
+  </ItemGroup>
+
 
 </Project>

@@ -6,11 +6,11 @@ namespace NerdStore.Domain.Repositories
 {
     public interface ICategoriaRepositorio
     {
-        public Categoria Obter(Guid id);
-        public ICollection<Categoria> Obter();
-        public void Inserir(Categoria categoria);
-        public void Atualizar(Categoria categoria);
-        public void Excluir(Categoria categoria);
-        public void Excluir(Guid id);
+        Categoria Obter(Guid id);
+        ICollection<Categoria> Obter();
+        void Inserir(Categoria categoria);
+        void Atualizar(Categoria categoria);
+        void Excluir(Categoria categoria);
+        void Excluir(Guid id);
     }
 }

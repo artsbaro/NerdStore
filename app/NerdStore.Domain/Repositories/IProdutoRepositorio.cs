@@ -4,7 +4,8 @@ using System.Text;
 
 namespace NerdStore.Domain.Repositories
 {
-    internal interface IProdutoRepositorio
+    public interface IProdutoRepositorio
     {
+        string ObterCodigo();
     }
 }

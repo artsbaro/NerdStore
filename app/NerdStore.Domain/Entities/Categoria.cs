@@ -8,9 +8,9 @@ namespace NerdStore.Domain.Entities
     {
         public string Nome { get; private set; }
         public int Codigo { get; private set; }
-        public Categoria(Guid id, string nome, int codigo)
+        public Categoria(string nome, int codigo)
         {
-            Id = id;
+            Id = Guid.NewGuid();
             Nome = nome;
             Codigo = codigo;
             Validar();
@@ -43,6 +43,5 @@ namespace NerdStore.Domain.Entities
         {
             return $"{Nome} - {Codigo}";
         }
-
     }
 }
