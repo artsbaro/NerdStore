@@ -4,8 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using NerdStore.Domain.Repositories;
-using NerdStore.Infra.Repositories;
+using NerdStore.CrossCutting;
+
 
 namespace NerdStore.Api
 {
@@ -35,8 +35,12 @@ namespace NerdStore.Api
             });
 
             // Container de Injeção de dependencia
-            services.AddScoped<ICategoriaRepositorio, CategoriaRepositorio>();
-            services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
+            RegisterServices(services);
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
+            NativeBootstraperRegister.RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

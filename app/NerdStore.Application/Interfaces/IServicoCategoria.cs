@@ -1,10 +1,11 @@
 ﻿using NerdStore.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace NerdStore.Domain.Repositories
+namespace NerdStore.Application.Interfaces
 {
-    public interface ICategoriaRepositorio
+    public interface IServicoCategoria
     {
         Categoria Obter(Guid id);
         Categoria Obter(int codigo);

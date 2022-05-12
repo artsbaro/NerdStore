@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using NerdStore.Application.Interfaces;
 using NerdStore.Domain.Entities;
-using NerdStore.Domain.Repositories;
-using NerdStore.Infra.Repositories;
 using System;
 using System.Collections.Generic;
 
@@ -13,10 +11,11 @@ namespace NerdStore.Api.Controllers
     [ApiController]
     public class CategoriaController : ControllerBase
     {
-        private readonly ICategoriaRepositorio _repositorio;
-        public CategoriaController(ICategoriaRepositorio repositorio)
+        private readonly IServicoCategoria _servicoCategoria;
+        public CategoriaController(IServicoCategoria servicoCategoria)
         {
-            _repositorio = repositorio;
+            _servicoCategoria = servicoCategoria;
+            // inst A
         }
 
         //[HttpGet]
@@ -35,22 +34,42 @@ namespace NerdStore.Api.Controllers
         [HttpGet]
         public ActionResult Get() // Inplementacao 'correta'
         {
-            var obj = _repositorio.Obter();
+            var obj = _servicoCategoria.Obter();
             return Ok(obj);
         }
 
-        [HttpGet("{id}")]
-        public ActionResult Get(Guid id) // Inplementacao 'correta'
+        //[HttpGet("{codigo}")]
+        //public ActionResult Get(int codigo) // Inplementacao 'correta'
+        //{
+        //    try
+        //    {
+        //        if (codigo == 0)
+        //        {
+        //            return BadRequest("Código inválido");
+        //        }
+
+        //        var obj = _servicoCategoria.Obter(codigo);
+        //        return Ok(obj);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new StatusCodeResult(500);
+        //    }
+        //}
+
+        [HttpGet("{codigo}")]
+        public ActionResult Get(int codigo) // Inplementacao 'correta'
         {
             try
             {
-                if (id == Guid.Empty)
-                {
-                    return BadRequest("Id inválido");
-                }
+                var list = new List<Categoria>();
 
-                var obj = _repositorio.Obter(id);
-                return Ok(obj);
+                for (int i = 0; i < 5; i++)
+                {
+                    var obj = _servicoCategoria.Obter(codigo);
+                    list.Add(obj);
+                }
+                return Ok(list);
             }
             catch (Exception ex)
             {

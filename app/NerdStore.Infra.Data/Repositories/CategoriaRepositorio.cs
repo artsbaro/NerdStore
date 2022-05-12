@@ -2,6 +2,7 @@
 using NerdStore.Domain.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace NerdStore.Infra.Repositories
@@ -25,6 +26,8 @@ namespace NerdStore.Infra.Repositories
             new Categoria("Feminino", 13)
         };
 
+        public CategoriaRepositorio(){}
+
         public void Atualizar(Categoria categoria)
         {
             throw new NotImplementedException();
@@ -47,12 +50,17 @@ namespace NerdStore.Infra.Repositories
 
         public Categoria Obter(Guid id)
         {
-            throw new NotImplementedException();
+            return _categorias.FirstOrDefault(c => c.Id == id);
         }
 
         public ICollection<Categoria> Obter()
         {
             return _categorias;
+        }
+
+        public Categoria Obter(int codigo)
+        {
+            return _categorias.FirstOrDefault(c => c.Codigo == codigo);
         }
     }
 }
