@@ -6,42 +6,62 @@ using System.Collections.Generic;
 
 namespace NerdStore.Application
 {
-    public class ServicoCategoria : IServicoCategoria
+    public class ServicoCategoria : ServicoBase, IServicoCategoria
     {
         private readonly ICategoriaRepositorio _repositorio;
+        private readonly INotificador _notificador;
 
-        public ServicoCategoria(ICategoriaRepositorio repositorio)
+        public ServicoCategoria(ICategoriaRepositorio repositorio, 
+            INotificador notificador) : base(notificador)
         {
             _repositorio = repositorio;
+            _notificador = notificador;
         }
 
         public void Atualizar(Categoria categoria)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Excluir(Categoria categoria)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Excluir(Guid id)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Inserir(Categoria categoria)
         {
-            throw new NotImplementedException();
+            if (categoria.Id == Guid.Empty)
+                NotificarErro("Id inválido");
+
+            if (string.IsNullOrWhiteSpace(categoria.Nome))
+                NotificarErro("Nome não preenchido");
+
         }
 
         public Categoria Obter(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                NotificarErro("Id inválido");
+            }
+
             return _repositorio.Obter(id);
         }
 
         public Categoria Obter(int codigo)
         {
+            if (codigo == 0)
+            {
+                NotificarErro("Código inválido");
+                return null;
+            }
+            
+
             return _repositorio.Obter(codigo);
         }
 

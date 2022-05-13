@@ -1,20 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NerdStore.Api.Controllers;
 using NerdStore.Application.Interfaces;
 using NerdStore.Domain.Entities;
 using System;
 using System.Collections.Generic;
 
-namespace NerdStore.Api.Controllers
+namespace NerdStore.Api.V1.Controllers
 {
-    [Route("[controller]")]
-    [Produces("application/json")]
-    [ApiController]
-    public class CategoriaController : ControllerBase
+    [Route("v1/[controller]")]
+
+    public class CategoriaController : MainController
     {
         private readonly IServicoCategoria _servicoCategoria;
-        public CategoriaController(IServicoCategoria servicoCategoria)
+        private readonly INotificador _notificador;
+
+        public CategoriaController(IServicoCategoria servicoCategoria, INotificador notificador) : base(notificador)
         {
             _servicoCategoria = servicoCategoria;
+            _notificador = notificador;
             // inst A
         }
 
@@ -35,41 +38,22 @@ namespace NerdStore.Api.Controllers
         public ActionResult Get() // Inplementacao 'correta'
         {
             var obj = _servicoCategoria.Obter();
-            return Ok(obj);
+            return CustomResponse(obj);
         }
-
-        //[HttpGet("{codigo}")]
-        //public ActionResult Get(int codigo) // Inplementacao 'correta'
-        //{
-        //    try
-        //    {
-        //        if (codigo == 0)
-        //        {
-        //            return BadRequest("Código inválido");
-        //        }
-
-        //        var obj = _servicoCategoria.Obter(codigo);
-        //        return Ok(obj);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new StatusCodeResult(500);
-        //    }
-        //}
 
         [HttpGet("{codigo}")]
         public ActionResult Get(int codigo) // Inplementacao 'correta'
         {
             try
             {
-                var list = new List<Categoria>();
-
-                for (int i = 0; i < 5; i++)
+                if (codigo == 0)
                 {
-                    var obj = _servicoCategoria.Obter(codigo);
-                    list.Add(obj);
+                    NotificarErro("Codigo inválido");
+                    return CustomResponse();
                 }
-                return Ok(list);
+
+                var obj = _servicoCategoria.Obter(codigo);
+                return CustomResponse(obj);
             }
             catch (Exception ex)
             {
